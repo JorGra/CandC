@@ -38,13 +38,15 @@ public class Grid<T>
 
     public Vector3 GetWordPosition(int x, int y)
     {
-        return new Vector3(x, y) * cellSize + originPosition;
+        return new Vector3(x, 0, y) * cellSize + originPosition;
     }
 
     public void GetXY(Vector3 worldPosition, out int x, out int y)
     {
         x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
-        y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
+        //Debug.Log("x: " + x);
+        y = Mathf.FloorToInt((worldPosition - originPosition).z / cellSize);
+        //Debug.Log("y: "  + y);
     }
 
     public void SetGridObject(int x, int y, T value)

@@ -19,13 +19,20 @@ public class Runner : MonoBehaviour
     void Update()
     {
         HandleMovement();
+
+        if(pathVectorList != null)
+            for (int i = 0; i < pathVectorList.Count - 1; i++)
+            {
+                Debug.DrawLine(new Vector3(pathVectorList[i].x, 0, pathVectorList[i].y) * Pathfinding.instance.GetGrid().GetCellSize(), 
+                    new Vector3(pathVectorList[i + 1].x, 0, pathVectorList[i + 1].y) * Pathfinding.instance.GetGrid().GetCellSize());
+            }
     }
 
     private void HandleMovement()
     {
         if (pathVectorList != null && pathVectorList.Count != 0)
         {
-            Debug.Log(currentPathIndex + "  " + pathVectorList.Count);
+            //Debug.Log(currentPathIndex + "  " + pathVectorList.Count + "   First: "  + pathVectorList[0]);
             Vector3 targetPosition = pathVectorList[currentPathIndex];
             if(Vector3.Distance(transform.position, targetPosition) > 1f)
             {
@@ -40,7 +47,7 @@ public class Runner : MonoBehaviour
                 currentPathIndex++;
                 if(currentPathIndex >= pathVectorList.Count)
                 {
-                    pathVectorList = null;
+                    pathVectorList = null; //Stop moving
                     //Disable animation
                     SetTargetPosition(GameManager.instance.GetRandomTargetPos());
                 }
@@ -58,6 +65,7 @@ public class Runner : MonoBehaviour
     {
         currentPathIndex = 0;
         pathVectorList = Pathfinding.instance.FindPath(transform.position, targetPosition);
+        //Debug.Log("TargetPos: " + targetPosition +", PathVectorList: " + pathVectorList.ToString());
 
         if(pathVectorList != null && pathVectorList.Count > 1)
         {

@@ -17,7 +17,7 @@ public class Pathfinding
     public Pathfinding(int width, int height)
     {
         instance = this;
-        grid = new Grid<PathNode>(width, height, 10f, Vector3.zero, (Grid<PathNode> grid, int x, int y) => new PathNode(grid, x, y));
+        grid = new Grid<PathNode>(width, height, 1f, Vector3.zero, (Grid<PathNode> grid, int x, int y) => new PathNode(grid, x, y));
     }
 
     public Grid<PathNode> GetGrid()
@@ -30,6 +30,9 @@ public class Pathfinding
         grid.GetXY(startWorldPos, out int startX, out int startY);
         grid.GetXY(endWorldPos, out int endX, out int endY);
 
+        //Debug.Log("start: " + startX + " " + startY);
+        //Debug.Log("end: " + endX + " " + endY);
+
         List<PathNode> path = FindPath(startX, startY, endX, endY);
         if(path == null)
         {
@@ -40,7 +43,7 @@ public class Pathfinding
             List<Vector3> vectorPath = new List<Vector3>();
             foreach (PathNode pathNode in path)
             {
-                vectorPath.Add(new Vector3(pathNode.x, pathNode.y) * grid.GetCellSize() + Vector3.one * grid.GetCellSize() * .5f);
+                vectorPath.Add(new Vector3(pathNode.x, 0, pathNode.y) * grid.GetCellSize()); //+ new Vector3(1,0,1) * grid.GetCellSize() * .5f);
             }
             return vectorPath;
         }
@@ -66,7 +69,7 @@ public class Pathfinding
         startNode.hCost = CalculateDistanceCost(startNode, endNode);
         startNode.CalculateFCost();
 
-        while(openList.Count> 0)
+        while(openList.Count > 0)
         {
             PathNode currentNode = GetLowestFCostNode(openList);
             if(currentNode == endNode)

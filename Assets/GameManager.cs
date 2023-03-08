@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
         var xRand = Random.Range(0, fieldSizeX);
         var yRand = Random.Range(0, fieldSizeY);
         var target = new Vector3(xRand, 0, yRand);
+        //Debug.Log("Target: " + target);
 
         return target;
     }
