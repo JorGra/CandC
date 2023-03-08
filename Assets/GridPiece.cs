@@ -8,27 +8,28 @@ public class GridPiece
     int val;
     MeshRenderer tile;
 
-    const int MAX_VAL = 15;
+    int maxVal = 5;
 
-    public GridPiece(int x, int y, int val, MeshRenderer tile)
+    public GridPiece(int x, int y, int val, MeshRenderer tile, int maxVal)
     {
         this.x = x;
         this.y = y;
         this.val = val;
         this.tile = tile;
+        this.maxVal = maxVal;
     }
 
     public int GetValue() => val;
 
     public void SetValue(int newVal)
     {
-        val = Mathf.Clamp(newVal, 0, MAX_VAL);
-        tile.material.SetColor("_BaseColor", Color.Lerp(Color.white, Color.black, val / MAX_VAL));
+        val = Mathf.Clamp(newVal, 0, maxVal);
+        tile.material.SetColor("_BaseColor", Color.Lerp(Color.white, Color.black, val / maxVal));
     }
 
     public void AddValue(int valToAdd)
     {
-        val = Mathf.Clamp(val + valToAdd, 0, MAX_VAL);
-        tile.material.SetColor("_BaseColor", Color.Lerp(Color.white, Color.black, (float)val / MAX_VAL));
+        val = Mathf.Clamp(val + valToAdd, 0, maxVal);
+        tile.material.SetColor("_BaseColor", Color.Lerp(Color.white, Color.black, (float)val / maxVal));
     }
 }

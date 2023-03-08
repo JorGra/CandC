@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     GridPiece CreateGridVisualizer(int x, int y)
     {
         var obj = Instantiate(gridObject, new Vector3(x, 0.01f, y) * cellSize, Quaternion.identity,transform);
-        var gridPiece = new GridPiece(x, y, 0, obj.GetComponent<MeshRenderer>());
+        var gridPiece = new GridPiece(x, y, 0, obj.GetComponent<MeshRenderer>(), maxGridValue);
         return gridPiece;
     }
 
@@ -61,10 +61,6 @@ public class GameManager : MonoBehaviour
         foreach (var runner in runners)
         {
             runner.UpdateRunner();
-
-            //var val = runnerGrid.GetValue(runner.transform.position);
-            //val.AddValue(1);
-            //runnerGrid.SetGridObject(runner.transform.position, val);
         }
 
         if(currentRunnerAddTime < Time.time)
@@ -77,6 +73,9 @@ public class GameManager : MonoBehaviour
     {
         foreach (var runner in runners)
         {
+            if (runner.isGrabbed)
+                continue;
+
             var val = runnerGrid.GetValue(runner.transform.position);
             if(val != null)
             {

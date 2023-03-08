@@ -9,7 +9,7 @@ public class Runner : MonoBehaviour
     int currentPathIndex = 0;
     List<Vector3> pathVectorList;
     Vector3 moveDir;
-
+    public bool isGrabbed { get; set; }
     // Start is called before the first frame update
     void Start()
     {
