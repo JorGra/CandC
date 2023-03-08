@@ -6,11 +6,19 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] int fieldSizeX;
     [SerializeField] int fieldSizeY;
+    [SerializeField] int maxGridValue;
     [SerializeField] float cellSize;
+    [SerializeField] float runnerAddIntervall = 5;
+
+    [SerializeField] List<Runner> runners = new List<Runner>();
 
     Pathfinding pathfinding;
-    Grid<int> testGrid;
+    Grid<GridPiece> runnerGrid;
     [SerializeField] GameObject gridObject;
+    [SerializeField] GameObject runnerPrefab;
+
+    float currentRunnerAddTime;
+
 
     public static GameManager instance;
 
@@ -23,15 +31,16 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pathfinding = new Pathfinding(fieldSizeX, fieldSizeY);
-        testGrid = new Grid<int>(fieldSizeX, fieldSizeY, cellSize, Vector3.zero, (Grid<int> grid, int x, int y) => CreateGridVisualizer(x, y));
+        pathfinding = new Pathfinding(fieldSizeX, fieldSizeY, cellSize);
+        runnerGrid = new Grid<GridPiece>(fieldSizeX, fieldSizeY, cellSize, Vector3.zero, (Grid<GridPiece> grid, int x, int y) => CreateGridVisualizer(x, y));
     }
 
 
-    int CreateGridVisualizer(int x, int y)
+    GridPiece CreateGridVisualizer(int x, int y)
     {
-        Instantiate(gridObject, new Vector3(x, 0.01f, y) * cellSize, Quaternion.identity,transform);
-        return 0;
+        var obj = Instantiate(gridObject, new Vector3(x, 0.01f, y) * cellSize, Quaternion.identity,transform);
+        var gridPiece = new GridPiece(x, y, 0, obj.GetComponent<MeshRenderer>());
+        return gridPiece;
     }
 
     public Vector3 GetRandomTargetPos()
@@ -44,11 +53,28 @@ public class GameManager : MonoBehaviour
         return target;
     }
 
-
-
     // Update is called once per frame
     void Update()
     {
-        
+        foreach (var runner in runners)
+        {
+            runner.UpdateRunner();
+
+            var val = runnerGrid.GetValue(runner.transform.position);
+            val.AddValue(1);
+            runnerGrid.SetGridObject(runner.transform.position, val);
+        }
+
+        if(currentRunnerAddTime < Time.time)
+        {
+            currentRunnerAddTime = Time.time + runnerAddIntervall;
+            AddRunner();
+        }
+    }
+
+    void AddRunner()
+    {
+        var runner = Instantiate(runnerPrefab, GetRandomTargetPos(), Quaternion.identity).GetComponent<Runner>();
+        runners.Add(runner);
     }
 }

@@ -11,6 +11,7 @@ public class Grid<T>
     private Vector3 originPosition;
     private T[,] gridArray;
 
+
     public event EventHandler<OnGridObjectChangedEventArgs> OnGridValueChanged;
     public class OnGridObjectChangedEventArgs : EventArgs
     {
@@ -44,9 +45,7 @@ public class Grid<T>
     public void GetXY(Vector3 worldPosition, out int x, out int y)
     {
         x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
-        //Debug.Log("x: " + x);
         y = Mathf.FloorToInt((worldPosition - originPosition).z / cellSize);
-        //Debug.Log("y: "  + y);
     }
 
     public void SetGridObject(int x, int y, T value)

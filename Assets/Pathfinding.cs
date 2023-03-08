@@ -14,10 +14,10 @@ public class Pathfinding
 
     public static Pathfinding instance;
 
-    public Pathfinding(int width, int height)
+    public Pathfinding(int width, int height, float gridSize)
     {
         instance = this;
-        grid = new Grid<PathNode>(width, height, 1f, Vector3.zero, (Grid<PathNode> grid, int x, int y) => new PathNode(grid, x, y));
+        grid = new Grid<PathNode>(width, height, gridSize, Vector3.zero, (Grid<PathNode> grid, int x, int y) => new PathNode(grid, x, y));
     }
 
     public Grid<PathNode> GetGrid()
