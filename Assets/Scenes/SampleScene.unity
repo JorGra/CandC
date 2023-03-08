@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &43887602 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3450444853072301611, guid: b2bba69683ffd3e4fb85b27897d02407,
+    type: 3}
+  m_PrefabInstance: {fileID: 8404035624037590909}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &104154767
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,7 +897,7 @@ MonoBehaviour:
   runnerAddIntervall: 2
   runners:
   - {fileID: 1145770130}
-  gridObject: {fileID: 2396015538092370478}
+  gridObject: {fileID: 43887602}
   runnerPrefab: {fileID: 5240915406051998637, guid: 4199917533249f34890bb7c480cb41fc,
     type: 3}
 --- !u!1001 &759446706
@@ -1964,12 +1970,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2bba69683ffd3e4fb85b27897d02407, type: 3}
---- !u!1 &2396015538092370478 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3450444853072301611, guid: b2bba69683ffd3e4fb85b27897d02407,
-    type: 3}
-  m_PrefabInstance: {fileID: 2396015538092370477}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5240915405049097020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2049,3 +2049,76 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4199917533249f34890bb7c480cb41fc, type: 3}
+--- !u!1001 &8404035624037590909
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3450444853072301611, guid: b2bba69683ffd3e4fb85b27897d02407,
+        type: 3}
+      propertyPath: m_Name
+      value: Grid (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449656977239683743, guid: b2bba69683ffd3e4fb85b27897d02407,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449656977239683743, guid: b2bba69683ffd3e4fb85b27897d02407,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449656977239683743, guid: b2bba69683ffd3e4fb85b27897d02407,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449656977239683743, guid: b2bba69683ffd3e4fb85b27897d02407,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449656977239683743, guid: b2bba69683ffd3e4fb85b27897d02407,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449656977239683743, guid: b2bba69683ffd3e4fb85b27897d02407,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449656977239683743, guid: b2bba69683ffd3e4fb85b27897d02407,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449656977239683743, guid: b2bba69683ffd3e4fb85b27897d02407,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449656977239683743, guid: b2bba69683ffd3e4fb85b27897d02407,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449656977239683743, guid: b2bba69683ffd3e4fb85b27897d02407,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6449656977239683743, guid: b2bba69683ffd3e4fb85b27897d02407,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b2bba69683ffd3e4fb85b27897d02407, type: 3}

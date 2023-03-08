@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     GridPiece CreateGridVisualizer(int x, int y)
     {
         var obj = Instantiate(gridObject, new Vector3(x, 0.01f, y) * cellSize, Quaternion.identity,transform);
-        var gridPiece = new GridPiece(x, y, 0, obj.GetComponent<MeshRenderer>(), maxGridValue);
+        var gridPiece = new GridPiece(x, y, 0, obj.GetComponentInChildren<MeshRenderer>(), maxGridValue);
         return gridPiece;
     }
 
