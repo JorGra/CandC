@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pathfinding = new Pathfinding(fieldSizeX + 1, fieldSizeY +1, cellSize);
+        pathfinding = new Pathfinding(fieldSizeX, fieldSizeY, cellSize);
         runnerGrid = new Grid<GridPiece>(fieldSizeX, fieldSizeY, cellSize, Vector3.zero, (Grid<GridPiece> grid, int x, int y) => CreateGridVisualizer(x, y));
         StartCoroutine(UpdateGrid(gridUpdateIntervall));
     }
@@ -47,8 +47,8 @@ public class GameManager : MonoBehaviour
 
     public Vector3 GetRandomTargetPos()
     {
-        var xRand = Random.Range(0, fieldSizeX + 1);
-        var yRand = Random.Range(0, fieldSizeY + 1);
+        var xRand = Random.Range(0, fieldSizeX +1);
+        var yRand = Random.Range(0, fieldSizeY +1);
         var target = new Vector3(xRand, 0, yRand);
         //Debug.Log("Target: " + target);
 
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (var runner in runners)
         {
-            if (runner.isGrabbed)
+            if (runner.wasGrabbed)
                 continue;
 
             var val = runnerGrid.GetValue(runner.transform.position);

@@ -73,10 +73,15 @@ public class Grid<T>
 
     public T GetGridObject(int x, int y)
     {
-        if (x >= 0 && y >= 0 && x < width && y < height)
-            return gridArray[x, y];
-        else
-            return default(T);
+        if (x < 0 || x >= width)
+            x = Mathf.Clamp(x, 0, width-1);
+        if (y < 0 || y >= height)
+            y = Mathf.Clamp(y, 0, height - 1);
+
+        return gridArray[x, y];
+        //if (x >= 0 && y >= 0 && x < width && y < height)
+        //else
+        //    return default(T);
     }
 
     public T GetValue(Vector3 worldPosition)

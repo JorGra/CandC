@@ -43,7 +43,7 @@ public class Pathfinding
             List<Vector3> vectorPath = new List<Vector3>();
             foreach (PathNode pathNode in path)
             {
-                vectorPath.Add(new Vector3(pathNode.x, 0, pathNode.y) * grid.GetCellSize()); //+ new Vector3(1,0,1) * grid.GetCellSize() * .5f);
+                vectorPath.Add(new Vector3(pathNode.x, 0, pathNode.y) * grid.GetCellSize());// + new Vector3(1,0,1) * grid.GetCellSize() * .5f);
             }
             return vectorPath;
         }
@@ -65,6 +65,8 @@ public class Pathfinding
                 pathNode.cameFrom = null;
             }
 
+        if (startNode == null || endNode == null)
+            Debug.LogError("Start or endnode null??  Start: " + startX + "  " + startY + " end:" + endX + "  "+ endY);
         startNode.gCost = 0;
         startNode.hCost = CalculateDistanceCost(startNode, endNode);
         startNode.CalculateFCost();
