@@ -29,6 +29,6 @@ public class GridPiece
     public void AddValue(int valToAdd)
     {
         val = Mathf.Clamp(val + valToAdd, 0, MAX_VAL);
-        tile.material.SetColor("_BaseColor", Color.Lerp(Color.white, Color.black, val / MAX_VAL));
+        tile.material.SetColor("_BaseColor", Color.Lerp(Color.white, Color.black, (float)val / MAX_VAL));
     }
 }

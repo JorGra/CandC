@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] int fieldSizeY;
     [SerializeField] int maxGridValue;
     [SerializeField] float cellSize;
+    [SerializeField] float gridUpdateIntervall;
     [SerializeField] float runnerAddIntervall = 5;
 
     [SerializeField] List<Runner> runners = new List<Runner>();
@@ -31,8 +32,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pathfinding = new Pathfinding(fieldSizeX, fieldSizeY, cellSize);
+        pathfinding = new Pathfinding(fieldSizeX + 1, fieldSizeY +1, cellSize);
         runnerGrid = new Grid<GridPiece>(fieldSizeX, fieldSizeY, cellSize, Vector3.zero, (Grid<GridPiece> grid, int x, int y) => CreateGridVisualizer(x, y));
+        StartCoroutine(UpdateGrid(gridUpdateIntervall));
     }
 
 
@@ -45,8 +47,8 @@ public class GameManager : MonoBehaviour
 
     public Vector3 GetRandomTargetPos()
     {
-        var xRand = Random.Range(0, fieldSizeX);
-        var yRand = Random.Range(0, fieldSizeY);
+        var xRand = Random.Range(0, fieldSizeX + 1);
+        var yRand = Random.Range(0, fieldSizeY + 1);
         var target = new Vector3(xRand, 0, yRand);
         //Debug.Log("Target: " + target);
 
@@ -60,9 +62,9 @@ public class GameManager : MonoBehaviour
         {
             runner.UpdateRunner();
 
-            var val = runnerGrid.GetValue(runner.transform.position);
-            val.AddValue(1);
-            runnerGrid.SetGridObject(runner.transform.position, val);
+            //var val = runnerGrid.GetValue(runner.transform.position);
+            //val.AddValue(1);
+            //runnerGrid.SetGridObject(runner.transform.position, val);
         }
 
         if(currentRunnerAddTime < Time.time)
@@ -70,6 +72,20 @@ public class GameManager : MonoBehaviour
             currentRunnerAddTime = Time.time + runnerAddIntervall;
             AddRunner();
         }
+    }
+    IEnumerator UpdateGrid(float gridUpdateIntervall)
+    {
+        foreach (var runner in runners)
+        {
+            var val = runnerGrid.GetValue(runner.transform.position);
+            if(val != null)
+            {
+                val.AddValue(1);
+                runnerGrid.SetGridObject(runner.transform.position, val);
+            }
+        }
+        yield return new WaitForSeconds(gridUpdateIntervall);
+        StartCoroutine(UpdateGrid(gridUpdateIntervall));
     }
 
     void AddRunner()

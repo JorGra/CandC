@@ -524,11 +524,13 @@ MonoBehaviour:
   fieldSizeY: 20
   maxGridValue: 10
   cellSize: 1
+  gridUpdateIntervall: 0.05
   runnerAddIntervall: 2
   runners:
   - {fileID: 1145770130}
   gridObject: {fileID: 2396015538092370478}
-  runnerPrefab: {fileID: 0}
+  runnerPrefab: {fileID: 5240915406051998637, guid: 4199917533249f34890bb7c480cb41fc,
+    type: 3}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
