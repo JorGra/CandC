@@ -12,6 +12,14 @@ public class GameManager : MonoBehaviour
     Grid<int> testGrid;
     [SerializeField] GameObject gridObject;
 
+    public static GameManager instance;
+
+    private void Awake()
+    {
+        if(instance == null)
+            instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +33,17 @@ public class GameManager : MonoBehaviour
         Instantiate(gridObject, new Vector3(x, 0.01f, y) * cellSize, Quaternion.identity,transform);
         return 0;
     }
+
+    public Vector3 GetRandomTargetPos()
+    {
+        var xRand = Random.Range(0, fieldSizeX);
+        var yRand = Random.Range(0, fieldSizeY);
+        var target = new Vector3(xRand, 0, yRand);
+
+        return target;
+    }
+
+
 
     // Update is called once per frame
     void Update()
