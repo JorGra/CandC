@@ -5,9 +5,10 @@ using UnityEngine;
 public class Runner : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
+    [SerializeField] float rotationSpeed;
     int currentPathIndex = 0;
     List<Vector3> pathVectorList;
-
+    Vector3 moveDir;
 
     // Start is called before the first frame update
     void Start()
@@ -19,13 +20,7 @@ public class Runner : MonoBehaviour
     void Update()
     {
         HandleMovement();
-
-        if(pathVectorList != null)
-            for (int i = 0; i < pathVectorList.Count - 1; i++)
-            {
-                Debug.DrawLine(new Vector3(pathVectorList[i].x, 0, pathVectorList[i].y) * Pathfinding.instance.GetGrid().GetCellSize(), 
-                    new Vector3(pathVectorList[i + 1].x, 0, pathVectorList[i + 1].y) * Pathfinding.instance.GetGrid().GetCellSize());
-            }
+        HandleRotation();
     }
 
     private void HandleMovement()
@@ -36,7 +31,7 @@ public class Runner : MonoBehaviour
             Vector3 targetPosition = pathVectorList[currentPathIndex];
             if(Vector3.Distance(transform.position, targetPosition) > 1f)
             {
-                Vector3 moveDir = (targetPosition - transform.position).normalized;
+                 moveDir = (targetPosition - transform.position).normalized;
 
                 float distanceBefore = Vector3.Distance(transform.position, targetPosition);
                 //enable animation
@@ -57,6 +52,17 @@ public class Runner : MonoBehaviour
         {
             //Disable animation
             SetTargetPosition(GameManager.instance.GetRandomTargetPos());
+
+        }
+    }
+
+    private void HandleRotation()
+    {
+
+        if(moveDir != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(moveDir, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
 
         }
     }
