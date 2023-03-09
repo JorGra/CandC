@@ -5,12 +5,28 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Grid")]
     [SerializeField] int fieldSizeX;
     [SerializeField] int fieldSizeY;
     [SerializeField] int maxGridValue;
     [SerializeField] float cellSize;
     [SerializeField] float gridUpdateIntervall;
+    [SerializeField] int gridPiecesFilled;
+    [SerializeField] float gridPiecesFilledPercentage;
+
+    [Header("Spawn settings")]
     [SerializeField] float runnerAddIntervall = 5;
+    [SerializeField] GameObject gridObject;
+    [SerializeField] GameObject runnerPrefab;
+
+
+    [Header("Day-Night Cycle")]
+    [SerializeField] Transform lightTransform;
+    [SerializeField] Transform lightPositionDay;
+    [SerializeField] Transform lightPositionNight;
+    [SerializeField] float lightLerpSpeed = 100;
+    Transform lightTargetTransform;
+    bool lerpLight = true;
 
     public bool gameOver = false;
 
@@ -20,15 +36,13 @@ public class GameManager : MonoBehaviour
 
     Pathfinding pathfinding;
     Grid<GridPiece> runnerGrid;
-    [SerializeField] GameObject gridObject;
-    [SerializeField] GameObject runnerPrefab;
 
     float currentRunnerAddTime;
 
-    [SerializeField] int gridPiecesFilled;
-    [SerializeField] float gridPiecesFilledPercentage;
 
     public static GameManager instance;
+
+    
 
     private void Awake()
     {
@@ -40,6 +54,47 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SetUpGrid();
+        lightTargetTransform = lightPositionDay;
+        StartCoroutine(DayNightCycle());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (currentRunnerAddTime < Time.time && !gameOver)
+        {
+            currentRunnerAddTime = Time.time + runnerAddIntervall;
+            AddRunner();
+        }
+
+        if (lerpLight)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(lightTargetTransform.position, Vector3.up);
+            lightTransform.rotation = Quaternion.RotateTowards(lightTransform.rotation, targetRotation, lightLerpSpeed * Time.deltaTime);
+        }
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (gameOver)
+            return;
+        foreach (var runner in runners)
+        {
+            runner.UpdateRunner();
+        }
+
+    }
+
+    private IEnumerator DayNightCycle()
+    {
+        yield return new WaitForSeconds(2); //60
+        StartNight();
+        yield return new WaitForSeconds(5);//15
+        EndNight();
+        yield return new WaitForSeconds(5);//10
+        lerpLight = false;
+        StartCoroutine(DayNightCycle());
     }
 
     void SetUpGrid()
@@ -67,26 +122,7 @@ public class GameManager : MonoBehaviour
         return target;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(currentRunnerAddTime < Time.time && !gameOver)
-        {
-            currentRunnerAddTime = Time.time + runnerAddIntervall;
-            AddRunner();
-        }
-    }
 
-    private void FixedUpdate()
-    {
-        if (gameOver)
-            return;
-        foreach (var runner in runners)
-        {
-            runner.UpdateRunner();
-        }
-
-    }
     IEnumerator UpdateGrid(float gridUpdateIntervall)
     {
         if (gameOver)
@@ -117,6 +153,18 @@ public class GameManager : MonoBehaviour
         runners.Remove(runner);
     }
 
+    public void StartNight()
+    {
+        lerpLight = true;
+        lightTargetTransform = lightPositionNight;
+    }
+
+    public void EndNight()
+    {
+        lightTargetTransform = lightPositionDay;
+
+    }
+
     public void GridPieceFilled()
     {
         gridPiecesFilled += 1;
@@ -124,6 +172,12 @@ public class GameManager : MonoBehaviour
 
         if (gridPiecesFilledPercentage >= 0.99)
             GameOver();
+    }
+
+    public void GridPieceUnfilled()
+    {
+        gridPiecesFilled -= 1;
+        gridPiecesFilledPercentage = (float)gridPiecesFilled / (fieldSizeX * fieldSizeY);
     }
 
     void GameOver()
@@ -135,7 +189,7 @@ public class GameManager : MonoBehaviour
         }
 
         gameOverText.gameObject.SetActive(true);
-    
+        StopAllCoroutines();
     }
 
     public void RestartGame()
@@ -148,6 +202,8 @@ public class GameManager : MonoBehaviour
         ScoreManager.instance.ResetScore();
         gameOverText.gameObject.SetActive(false);
         SetUpGrid();
+        StartCoroutine(DayNightCycle());
     }
 
+    public Grid<GridPiece> GetRunnerGrid() => runnerGrid;
 }

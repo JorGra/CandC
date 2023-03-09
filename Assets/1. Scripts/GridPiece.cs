@@ -42,5 +42,16 @@ public class GridPiece
 
     }
 
+    public void SubtractValue(int valToSubtract)
+    {
+        val = Mathf.Clamp(val - valToSubtract, 0, maxVal);
+        if (full)
+        {
+            full = false;
+            GameManager.instance.GridPieceUnfilled();
+        }
+
+        tile.materials[1].SetColor("_BaseColor", Color.Lerp(Color.white, Color.black, (float)val / maxVal));
+    }
     
 }
