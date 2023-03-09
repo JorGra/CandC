@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (var runner in runners)
         {
-            if (runner.wasGrabbed)
+            if (runner.isGrabbed || !runner.isGrounded)
                 continue;
 
             var val = runnerGrid.GetValue(runner.transform.position);
@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 
     void AddRunner()
     {
-        var runner = Instantiate(runnerPrefab, GetRandomTargetPos(), Quaternion.identity).GetComponent<Runner>();
+        var runner = Instantiate(runnerPrefab, GetRandomTargetPos() + Vector3.up * 50f, Quaternion.identity).GetComponent<Runner>();
         runners.Add(runner);
     }
 }

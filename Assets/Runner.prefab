@@ -104,9 +104,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 1.4007691
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.29961544, z: 0}
 --- !u!1 &5240915406051998637
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +141,7 @@ Transform:
   - {fileID: 5706555191158598183}
   - {fileID: 5240915405502997096}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5240915406051998638
 MonoBehaviour:
@@ -157,6 +157,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rotationSpeed: 720
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  groundCheckDistance: 1.3
+  activateStunTime: 1.8
+  anim: {fileID: 1860529129218551901}
 --- !u!54 &2195464248804732970
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -227,13 +233,49 @@ MonoBehaviour:
       m_Calls: []
   m_SelectEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5240915406051998638}
+        m_TargetAssemblyTypeName: Runner, Assembly-CSharp
+        m_MethodName: RunnerSelectedEntered
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5240915406051998638}
+        m_TargetAssemblyTypeName: Runner, Assembly-CSharp
+        m_MethodName: RunnerSelectedExited
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Activated:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5240915406051998638}
+        m_TargetAssemblyTypeName: Runner, Assembly-CSharp
+        m_MethodName: RunnerActivated
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Deactivated:
     m_PersistentCalls:
       m_Calls: []
@@ -264,13 +306,13 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 2656074531784628046}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
   m_MatchAttachRotation: 1
   m_SnapToColliderVolume: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 0
+  m_MovementType: 2
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
@@ -418,6 +460,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa8503d2edd80aa44b51a00c6521b37c, type: 3}
+--- !u!95 &1860529129218551901 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: aa8503d2edd80aa44b51a00c6521b37c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5240915405900746188}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2656074531784628046 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1412092348503287166, guid: aa8503d2edd80aa44b51a00c6521b37c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5240915405900746188}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5706555191158598183 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: aa8503d2edd80aa44b51a00c6521b37c,

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,25 @@ public class Runner : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
     [SerializeField] float rotationSpeed;
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float groundCheckDistance;
+    [SerializeField] float activateStunTime = 2f;
+    [SerializeField] Animator anim;
+
     int currentPathIndex = 0;
     List<Vector3> pathVectorList;
     Vector3 moveDir;
-    public bool wasGrabbed { get; set; }
+
+    float currentStunTime;
+    
+
+    const string ANIM_GROUNDED = "Grounded"; 
+    const string ANIM_STUNNED = "Stunned"; 
+    public bool isGrabbed { get; set; }
+    public bool isStunned { get; set; }
+    public bool isGrounded { get; set; }
+    bool groundedLastFrame;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -19,11 +35,40 @@ public class Runner : MonoBehaviour
     // Update is called once per frame
     public void UpdateRunner()
     {
-        if (!wasGrabbed)
+        if (!isGrabbed && !isStunned)
         {
             HandleMovement();
-            HandleRotation();
         }
+        HandleRotation();
+
+        CheckForGround();
+        if (currentStunTime < Time.time)
+        {
+            anim.SetBool(ANIM_STUNNED, false);
+            isStunned = false;
+        }
+        if (isGrounded != groundedLastFrame)
+            StunRunner();
+        groundedLastFrame = isGrounded;
+    }
+
+    private void CheckForGround()
+    {
+        //RaycastHit hit;
+        //Debug.DrawRay(transform.position + Vector3.up, Vector3.down * groundCheckDistance, Color.yellow);
+        
+        
+        if(!Physics.Raycast(transform.position + Vector3.up, Vector3.down, groundCheckDistance, groundLayer))
+        {
+            isGrounded = false;
+            anim.SetBool(ANIM_GROUNDED, false);
+        }
+        else
+        {
+            anim.SetBool(ANIM_GROUNDED, true);
+            isGrounded = true;
+        }
+
     }
 
     private void HandleMovement()
@@ -80,5 +125,30 @@ public class Runner : MonoBehaviour
         {
             pathVectorList.RemoveAt(0);
         }
+    }
+
+    public void RunnerSelectedEntered()
+    {
+        isGrabbed = true;
+        
+    }
+
+    public void RunnerSelectedExited()
+    {
+        isGrabbed = false;
+    }
+
+    public void RunnerActivated()
+    {
+        anim.SetBool(ANIM_STUNNED, true);
+        currentStunTime = Time.time + activateStunTime;
+        isStunned = true;
+    }
+
+    public void StunRunner()
+    {
+
+        isStunned = true;
+        currentStunTime = Time.time + activateStunTime;
     }
 }
