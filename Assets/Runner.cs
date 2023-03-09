@@ -11,6 +11,9 @@ public class Runner : MonoBehaviour
     [SerializeField] float groundCheckDistance;
     [SerializeField] float activateStunTime = 2f;
     [SerializeField] Animator anim;
+    [SerializeField] GameObject destroyParticleSystem;
+
+    public int ScoreToAdd = 1;
 
     Rigidbody rb;
     int currentPathIndex = 0;
@@ -152,5 +155,13 @@ public class Runner : MonoBehaviour
 
         isStunned = true;
         currentStunTime = Time.time + activateStunTime;
+    }
+
+    public void DestroyRunner()
+    {
+        if(destroyParticleSystem != null)
+            Instantiate(destroyParticleSystem, transform.position, Quaternion.identity);
+        GameManager.instance.RemoveRunner(this);
+        Destroy(gameObject);
     }
 }

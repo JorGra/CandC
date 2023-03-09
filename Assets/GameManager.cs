@@ -92,4 +92,8 @@ public class GameManager : MonoBehaviour
         var runner = Instantiate(runnerPrefab, GetRandomTargetPos() + Vector3.up * 50f, Quaternion.identity).GetComponent<Runner>();
         runners.Add(runner);
     }
+    public void RemoveRunner(Runner runner)
+    {
+        runners.Remove(runner);
+    }
 }
