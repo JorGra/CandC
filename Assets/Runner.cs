@@ -164,4 +164,10 @@ public class Runner : MonoBehaviour
         GameManager.instance.RemoveRunner(this);
         Destroy(gameObject);
     }
+
+    public void DestroyRunner(float scoreToAdd)
+    {
+        ScoreManager.instance.AddScore(scoreToAdd);
+        DestroyRunner();
+    }
 }

@@ -42,7 +42,7 @@ Material:
     - _PerspectiveFilter: 0.875
     - _ScaleRatioA: 0.9
     - _ScaleRatioB: 1
-    - _ScaleRatioC: 0.5835993
+    - _ScaleRatioC: 0.4461562
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
@@ -57,14 +57,14 @@ Material:
     - _UnderlayDilate: 0.696
     - _UnderlayOffsetX: 0
     - _UnderlayOffsetY: 0
-    - _UnderlaySoftness: 0.557
+    - _UnderlaySoftness: 0.943
     - _VertexOffsetX: 0
     - _VertexOffsetY: 0
     - _WeightBold: 0.75
     - _WeightNormal: 0
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
-    - _FaceColor: {r: 5.278032, g: 5.278032, b: 5.278032, a: 1}
+    - _FaceColor: {r: 3.482202, g: 3.482202, b: 3.482202, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []

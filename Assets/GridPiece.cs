@@ -10,6 +10,8 @@ public class GridPiece
 
     int maxVal = 5;
 
+    bool full;
+
     public GridPiece(int x, int y, int val, MeshRenderer tile, int maxVal)
     {
         this.x = x;
@@ -30,6 +32,15 @@ public class GridPiece
     public void AddValue(int valToAdd)
     {
         val = Mathf.Clamp(val + valToAdd, 0, maxVal);
+
+        if(!full && val == maxVal)
+        {
+            full = true;
+            GameManager.instance.GridPieceFilled();
+        }
         tile.materials[1].SetColor("_BaseColor", Color.Lerp(Color.white, Color.black, (float)val / maxVal));
+
     }
+
+    
 }
