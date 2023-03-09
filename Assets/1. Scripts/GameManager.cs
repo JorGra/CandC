@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currentRunnerAddTime < Time.time)
+        if(currentRunnerAddTime < Time.time && !gameOver)
         {
             currentRunnerAddTime = Time.time + runnerAddIntervall;
             AddRunner();
@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameOver)
             yield return null;
-        foreach (var runner in runners)
+        foreach (var runner in runners.ToArray())
         {
             if (runner.isGrabbed || !runner.isGrounded)
                 continue;
