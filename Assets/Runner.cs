@@ -12,6 +12,7 @@ public class Runner : MonoBehaviour
     [SerializeField] float activateStunTime = 2f;
     [SerializeField] Animator anim;
 
+    Rigidbody rb;
     int currentPathIndex = 0;
     List<Vector3> pathVectorList;
     Vector3 moveDir;
@@ -29,7 +30,7 @@ public class Runner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -83,7 +84,8 @@ public class Runner : MonoBehaviour
 
                 float distanceBefore = Vector3.Distance(transform.position, targetPosition);
                 //enable animation
-                transform.position = transform.position + moveDir * moveSpeed* Time.deltaTime;
+                //transform.position = transform.position + moveDir * moveSpeed* Time.deltaTime;
+                rb.MovePosition(transform.position + moveDir * moveSpeed * Time.deltaTime);
             }
             else
             {
