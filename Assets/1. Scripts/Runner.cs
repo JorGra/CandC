@@ -25,6 +25,7 @@ public class Runner : MonoBehaviour
 
     const string ANIM_GROUNDED = "Grounded"; 
     const string ANIM_STUNNED = "Stunned"; 
+    const string ANIM_RUNSPEED = "RunSpeed"; 
     public bool isGrabbed { get; set; }
     public bool isStunned { get; set; }
     public bool isGrounded { get; set; }
@@ -37,11 +38,11 @@ public class Runner : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void UpdateRunner()
+    public void UpdateRunner(bool night)
     {
         if (!isGrabbed && !isStunned)
         {
-            HandleMovement();
+            HandleMovement(night);
         }
         HandleRotation();
 
@@ -75,7 +76,7 @@ public class Runner : MonoBehaviour
 
     }
 
-    private void HandleMovement()
+    private void HandleMovement(bool night)
     {
         if (pathVectorList != null && pathVectorList.Count != 0)
         {
@@ -88,7 +89,11 @@ public class Runner : MonoBehaviour
                 float distanceBefore = Vector3.Distance(transform.position, targetPosition);
                 //enable animation
                 //transform.position = transform.position + moveDir * moveSpeed* Time.deltaTime;
-                rb.MovePosition(transform.position + moveDir * moveSpeed * Time.deltaTime);
+                var nightMoveSpeedBonus = 1f;
+                if (night)
+                    nightMoveSpeedBonus = 2f;
+                anim.SetFloat(ANIM_RUNSPEED, nightMoveSpeedBonus);
+                rb.MovePosition(transform.position + moveDir * moveSpeed * (nightMoveSpeedBonus) * Time.deltaTime);
             }
             else
             {

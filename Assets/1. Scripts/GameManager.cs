@@ -25,11 +25,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] Transform lightPositionDay;
     [SerializeField] Transform lightPositionNight;
     [SerializeField] float lightLerpSpeed = 100;
+    [SerializeField] float dayFogDensity = 0.01f;
+    [SerializeField] float nightFogDensity = 0.05f;
+    [SerializeField] Color dayColor;
+    [SerializeField] Color nightColor;
+    [SerializeField] Camera mainCamera;
     Transform lightTargetTransform;
-    bool lerpLight = true;
+    Color targetColor;
+    float targetFogDensity;
+    private bool night;
+    bool lerpLight = false;
 
     public bool gameOver = false;
 
+    [Header("Game state")]
     [SerializeField] TMP_Text gameOverText;
 
     [SerializeField] List<Runner> runners = new List<Runner>();
@@ -71,6 +80,10 @@ public class GameManager : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(lightTargetTransform.position, Vector3.up);
             lightTransform.rotation = Quaternion.RotateTowards(lightTransform.rotation, targetRotation, lightLerpSpeed * Time.deltaTime);
+
+            RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, targetColor, (lightLerpSpeed *0.05f)* Time.deltaTime);
+            RenderSettings.fogDensity = Mathf.Lerp(RenderSettings.fogDensity, targetFogDensity, (lightLerpSpeed * 0.05f) * Time.deltaTime);
+            mainCamera.backgroundColor = Color.Lerp(RenderSettings.fogColor, targetColor, (lightLerpSpeed * 0.05f) * Time.deltaTime);
         }
 
     }
@@ -81,16 +94,16 @@ public class GameManager : MonoBehaviour
             return;
         foreach (var runner in runners)
         {
-            runner.UpdateRunner();
+            runner.UpdateRunner(night);
         }
 
     }
 
     private IEnumerator DayNightCycle()
     {
-        yield return new WaitForSeconds(2); //60
+        yield return new WaitForSeconds(60); //60
         StartNight();
-        yield return new WaitForSeconds(5);//15
+        yield return new WaitForSeconds(15);//15
         EndNight();
         yield return new WaitForSeconds(5);//10
         lerpLight = false;
@@ -155,13 +168,20 @@ public class GameManager : MonoBehaviour
 
     public void StartNight()
     {
+        night = true;
         lerpLight = true;
         lightTargetTransform = lightPositionNight;
+
+        targetColor = nightColor;
+        targetFogDensity = nightFogDensity;
     }
 
     public void EndNight()
     {
+        night = false;
+        targetColor = dayColor;
         lightTargetTransform = lightPositionDay;
+        targetFogDensity = dayFogDensity;
 
     }
 
@@ -170,7 +190,7 @@ public class GameManager : MonoBehaviour
         gridPiecesFilled += 1;
         gridPiecesFilledPercentage = (float)gridPiecesFilled / (fieldSizeX * fieldSizeY);
 
-        if (gridPiecesFilledPercentage >= 0.99)
+        if (gridPiecesFilledPercentage >= 1f)
             GameOver();
     }
 

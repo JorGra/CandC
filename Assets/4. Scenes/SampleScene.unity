@@ -1317,21 +1317,25 @@ MonoBehaviour:
   maxGridValue: 5
   cellSize: 1
   gridUpdateIntervall: 0.05
+  gridPiecesFilled: 0
+  gridPiecesFilledPercentage: 0
   runnerAddIntervall: 2
-  lightTransform: {fileID: 410087041}
-  lightPositionDay: {fileID: 683418030}
-  lightPositionNight: {fileID: 1156877341}
-  lightLerpSpeed: 100
-  gameOver: 0
-  gameOverText: {fileID: 701013970}
-  runners:
-  - {fileID: 1145770130}
   gridObject: {fileID: 3450444853072301611, guid: b2bba69683ffd3e4fb85b27897d02407,
     type: 3}
   runnerPrefab: {fileID: 5240915406051998637, guid: 4199917533249f34890bb7c480cb41fc,
     type: 3}
-  gridPiecesFilled: 0
-  gridPiecesFilledPercentage: 0
+  lightTransform: {fileID: 410087041}
+  lightPositionDay: {fileID: 683418030}
+  lightPositionNight: {fileID: 1156877341}
+  lightLerpSpeed: 60
+  dayFogDensity: 0.01
+  nightFogDensity: 0.05
+  dayColor: {r: 1, g: 1, b: 1, a: 1}
+  nightColor: {r: 0, g: 0, b: 0, a: 0}
+  gameOver: 0
+  gameOverText: {fileID: 701013970}
+  runners:
+  - {fileID: 1145770130}
 --- !u!114 &632347323
 MonoBehaviour:
   m_ObjectHideFlags: 0
