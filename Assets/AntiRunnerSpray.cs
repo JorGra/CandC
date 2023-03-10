@@ -9,6 +9,7 @@ public class AntiRunnerSpray : PowerUp
     [SerializeField] float sprayDistance;
     [SerializeField] LayerMask hitLayerMask;
     [SerializeField] Transform[] rayOrigins;
+    [SerializeField] ParticleSystem spraySystem;
     Grid<GridPiece> runnerGrid;
 
     protected override void Start()
@@ -33,13 +34,14 @@ public class AntiRunnerSpray : PowerUp
                     }
                     if(hit.collider.tag == "Grid")
                     {
-                        runnerGrid.GetValue(hit.point)?.SubtractValue(1);
+                        runnerGrid?.GetValue(hit.point)?.SubtractValue(1);
                     }
 
                 }
                 Debug.DrawRay(rayTrans.position, transform.TransformDirection(Vector3.forward) * sprayDistance, Color.yellow);
 
             }
+            spraySystem.Play();
         }
     }
     public override void GrabbedPowerUp()

@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Spawn settings")]
     [SerializeField] float runnerAddIntervall = 5;
+    [SerializeField] float runnerAddIntervallStart = 5;
+    [SerializeField] float runnerAddIntervallMin = 0.5f;
     [SerializeField] GameObject gridObject;
     [SerializeField] GameObject runnerPrefab;
 
@@ -51,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
-    
+    float currentGameTime;
 
     private void Awake()
     {
@@ -85,6 +87,9 @@ public class GameManager : MonoBehaviour
             RenderSettings.fogDensity = Mathf.Lerp(RenderSettings.fogDensity, targetFogDensity, (lightLerpSpeed * 0.05f) * Time.deltaTime);
             mainCamera.backgroundColor = Color.Lerp(RenderSettings.fogColor, targetColor, (lightLerpSpeed * 0.05f) * Time.deltaTime);
         }
+        currentGameTime += Time.deltaTime;
+        runnerAddIntervall = (1 - Mathf.Exp(currentGameTime * 0.015f)) + runnerAddIntervallStart;
+        runnerAddIntervall = Mathf.Clamp(runnerAddIntervall, runnerAddIntervallMin, runnerAddIntervallStart);
 
     }
 
@@ -215,6 +220,7 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         gameOver = false;
+        currentGameTime = 0;
         for (int i = 0; i < transform.childCount; i++)
         {
             Destroy(transform.GetChild(i));

@@ -12,6 +12,7 @@ public class Runner : MonoBehaviour
     [SerializeField] float activateStunTime = 2f;
     [SerializeField] Animator anim;
     [SerializeField] GameObject destroyParticleSystem;
+    [SerializeField] ParticleSystem StunParticleSystem;
 
     public int ScoreToAdd = 1;
 
@@ -55,6 +56,12 @@ public class Runner : MonoBehaviour
         if (isGrounded != groundedLastFrame)
             StunRunner();
         groundedLastFrame = isGrounded;
+
+        if (transform.position.y < -3)
+            DestroyRunner();
+
+        //if (isStunned && isGrounded && !StunParticleSystem.isPlaying && !isGrabbed)
+        //    StunParticleSystem.Play();
     }
 
     private void CheckForGround()
@@ -153,6 +160,7 @@ public class Runner : MonoBehaviour
         anim.SetBool(ANIM_STUNNED, true);
         currentStunTime = Time.time + activateStunTime;
         isStunned = true;
+        StunParticleSystem.Play();
     }
 
     public void StunRunner()
