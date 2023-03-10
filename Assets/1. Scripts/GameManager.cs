@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] float runnerAddIntervall = 5;
     [SerializeField] float runnerAddIntervallStart = 5;
     [SerializeField] float runnerAddIntervallMin = 0.5f;
+    [SerializeField] float initalIdleTime = 5f;
     [SerializeField] GameObject gridObject;
     [SerializeField] GameObject runnerPrefab;
 
@@ -72,6 +73,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.time < initalIdleTime)
+            return;
+
         if (currentRunnerAddTime < Time.time && !gameOver)
         {
             currentRunnerAddTime = Time.time + runnerAddIntervall;

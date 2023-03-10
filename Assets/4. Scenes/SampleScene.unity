@@ -1322,6 +1322,7 @@ MonoBehaviour:
   runnerAddIntervall: 2
   runnerAddIntervallStart: 3
   runnerAddIntervallMin: 0.5
+  initalIdleTime: 5
   gridObject: {fileID: 3450444853072301611, guid: b2bba69683ffd3e4fb85b27897d02407,
     type: 3}
   runnerPrefab: {fileID: 5240915406051998637, guid: 4199917533249f34890bb7c480cb41fc,
@@ -1337,8 +1338,7 @@ MonoBehaviour:
   mainCamera: {fileID: 1707838088}
   gameOver: 0
   gameOverText: {fileID: 701013970}
-  runners:
-  - {fileID: 1145770130}
+  runners: []
 --- !u!114 &632347323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2654,18 +2654,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1145770130 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5240915406051998638, guid: 4199917533249f34890bb7c480cb41fc,
-    type: 3}
-  m_PrefabInstance: {fileID: 5240915405049097020}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17c591caaa0aaf947aa08204855e99cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1156877340
@@ -4840,6 +4828,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Runner
       objectReference: {fileID: 0}
+    - target: {fileID: 5240915406051998637, guid: 4199917533249f34890bb7c480cb41fc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5240915406051998639, guid: 4199917533249f34890bb7c480cb41fc,
         type: 3}
       propertyPath: m_RootOrder
@@ -4912,6 +4905,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RunnerStunned
+      objectReference: {fileID: 0}
+    - target: {fileID: 1688900843423828845, guid: 3880225f70dcf824b84997df913967c4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8396287927424002648, guid: 3880225f70dcf824b84997df913967c4,
         type: 3}
